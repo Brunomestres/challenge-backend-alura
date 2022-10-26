@@ -10,5 +10,5 @@ Essa API permite que o usuário crie uma playlist de seus videos favoritos.
 | :fire: Desafio     | null
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
-![](main.png#vitrinedev)
+![]https://miro.medium.com/max/720/1*6BbOjcBAEQHUqgs9EMXX8g.png#vitrinedev)
 
