@@ -26,6 +26,8 @@ class CategoriaController {
       }
 
       const { titulo, cor } = req.body as ICategoria;
+      if (!titulo) return res.status(400).json({ message: 'O titulo é obrigatório!'})
+      if (!cor) return res.status(400).json({ message: 'A cor é obrigatória!'})
       const categoria = new Categoria({
         cor,
         titulo,
