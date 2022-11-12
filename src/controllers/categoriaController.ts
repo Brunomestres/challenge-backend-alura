@@ -1,6 +1,8 @@
+import mongoose from 'mongoose'
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { Categoria } from "../models/Categoria";
+import { Video } from "../models/Video";
 import { ICategoria } from "../interfaces/Categoria";
 
 interface IRequestID {
@@ -59,13 +61,12 @@ class CategoriaController {
         return res.status(404).json({ message: "Categoria não encontrada!" });
       }
 
-      video.titulo = titulo
-      video.cor = cor
+      video.titulo = titulo;
+      video.cor = cor;
 
-      await video.save()
+      await video.save();
 
-      return res.json({message: 'Categoria atualizada com sucesso!'})
-
+      return res.json({ message: "Categoria atualizada com sucesso!" });
     } catch (error) {
       return res.status(400).json({ message: error });
     }
@@ -78,9 +79,21 @@ class CategoriaController {
         return res.status(404).json({ message: "Categoria não encontrada!" });
       }
 
-      await Categoria.deleteOne({ id })
+      await Categoria.deleteOne({ id });
 
-      return res.json({message: 'Categoria deletada com sucesso!'})
+      return res.json({ message: "Categoria deletada com sucesso!" });
+    } catch (error) {
+      return res.status(400).json({ message: error });
+    }
+  }
+  async getVideos(req: Request, res: Response) {
+    try {
+      const id = req.params.id;
+      const videos = await Video.find({ categoria: id}).exec()
+      if (!videos) {
+        return res.status(404).json({ message: "Categoria não encontrada!" });
+      }
+      return res.json(videos);
     } catch (error) {
       return res.status(400).json({ message: error });
     }

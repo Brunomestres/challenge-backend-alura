@@ -7,17 +7,25 @@ const routes = Router();
 routes.get("/", videoController.get);
 routes.post(
   "/",
-  body("titulo").isLength({ min: 5, max: 30 }).withMessage('O titulo precisa ter no minimo 5 caracteres'),
-  body("descricao").isLength({ min: 5, max: 30 }).withMessage('A descrição precisa ter no minimo 5 caracteres'),
-  body("url").isURL().withMessage('A URL está inválida'),
+  body("titulo")
+    .isLength({ min: 5, max: 30 })
+    .withMessage("O titulo precisa ter no minimo 5 caracteres"),
+  body("descricao")
+    .isLength({ min: 5, max: 30 })
+    .withMessage("A descrição precisa ter no minimo 5 caracteres"),
+  body("url").isURL().withMessage("A URL está inválida"),
   videoController.create
 );
 routes.get("/:id", videoController.findById);
 routes.put(
   "/:id",
-  body("titulo").isLength({ min: 5, max: 30 }).withMessage('O titulo precisa ter no minimo 5 caracteres'),
-  body("descricao").isLength({ min: 5, max: 30 }).withMessage('A descrição precisa ter no minimo 5 caracteres'),
-  body("url").isURL().withMessage('A URL está inválida'),
+  body("titulo")
+    .isLength({ min: 5, max: 30 })
+    .withMessage("O titulo precisa ter no minimo 5 caracteres"),
+  body("descricao")
+    .isLength({ min: 5, max: 30 })
+    .withMessage("A descrição precisa ter no minimo 5 caracteres"),
+  body("url").isURL().withMessage("A URL está inválida"),
   videoController.update
 );
 routes.delete("/:id", videoController.delete);

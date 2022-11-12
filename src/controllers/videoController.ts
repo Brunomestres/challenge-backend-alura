@@ -9,8 +9,13 @@ interface IRequestID {
 class VideoController {
   async get(req: Request, res: Response) {
     try {
+      const name = req.query.search;
+      if (name) {
+        const videosSearch = await Video.find({ titulo: name }).exec();
+        return res.json(videosSearch);
+      }
       const videos = await Video.find();
-      res.json(videos);
+      return res.json(videos);
     } catch (error) {
       return res.status(400).json({ message: error });
     }
@@ -23,11 +28,12 @@ class VideoController {
         return res.status(400).json({ errors: errors.array() });
       }
 
-      const { titulo, descricao, url } = req.body as IVideos;
+      const { titulo, descricao, url, categoria } = req.body as IVideos;
       const video = new Video({
         descricao,
         titulo,
         url,
+        categoria,
       });
 
       await video.save();
@@ -60,14 +66,13 @@ class VideoController {
         return res.status(404).json({ message: "Video não encontrado!" });
       }
 
-      video.titulo = titulo
-      video.descricao = descricao
-      video.url = url
+      video.titulo = titulo;
+      video.descricao = descricao;
+      video.url = url;
 
-      await video.save()
+      await video.save();
 
-      return res.json({message: 'Video atualizado com sucesso!'})
-
+      return res.json({ message: "Video atualizado com sucesso!" });
     } catch (error) {
       return res.status(400).json({ message: error });
     }
@@ -80,9 +85,9 @@ class VideoController {
         return res.status(404).json({ message: "Video não encontrado!" });
       }
 
-      await Video.deleteOne({ id })
+      await Video.deleteOne({ id });
 
-      return res.json({message: 'Video deletado com sucesso!'})
+      return res.json({ message: "Video deletado com sucesso!" });
     } catch (error) {
       return res.status(400).json({ message: error });
     }
